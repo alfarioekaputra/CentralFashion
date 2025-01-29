@@ -3,22 +3,22 @@ from django.db import models
 from django.db.models import Max
 from auditlog.registry import auditlog
 
-from core.models import TimeStampedModel
+from core.models import TimeStampedModel, SoftDelete
 
-class Termin(TimeStampedModel):
+class Termin(TimeStampedModel, SoftDelete):
   name = models.CharField(max_length=100)
   description = models.CharField(max_length=100, null=True)
   time_period = models.IntegerField()
 
   def __str__(self):
     return self.name
-class Supplier(TimeStampedModel):
+class Supplier(TimeStampedModel, SoftDelete):
   code = models.CharField(max_length=10)
   name = models.CharField(max_length=100)
   address = models.TextField(null=True)
   phone = models.CharField(max_length=15, null=True)
   email = models.EmailField(null=True)
-  termin = models.ForeignKey(Termin, on_delete=models.CASCADE)
+  termin = models.ForeignKey(Termin, on_delete=models.DO_NOTHING)
 
   class Meta:
     ordering = ['code']
