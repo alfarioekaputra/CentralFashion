@@ -20,10 +20,10 @@
     </button>
     
     <!-- Tombol Show Filter -->
-    <!-- <button id="show-filter-btn" class="btn btn-secondary" hx-get="{% url 'supplier_load_filter_form' %}"
+    <button id="show-filter-btn" class="btn btn-secondary" hx-get="{% url 'supplier_load_filter_form' %}"
       hx-target="#filter-form" hx-swap="innerHTML">
       <i class="ti ti-search"></i> CARI DATA
-    </button> -->
+    </button>
     <!-- End Tombol Show Filter -->
     
     <a href="{% url 'supplier_export_excel' %}" class="btn btn-warning">
@@ -33,7 +33,9 @@
   </div>
   <div class="card-body">
     <div id="table-container">
-      {% include 'filter.html' %}
+      <div id="filter-form" style="display: none;">
+        {% include 'filter.html' %}
+      </div>
       {% include 'table.html' %}
     </div>
 
@@ -61,9 +63,14 @@
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     // Tangani tampilan form filter saat tombol "Show Filter" diklik
-    // document.getElementById('show-filter-btn').addEventListener('click', function () {
-    //   document.getElementById('filter-form').style.display = 'block';
-    // });
+    document.getElementById('show-filter-btn').addEventListener('click', function () {
+      var filterForm = document.getElementById('filter-form');
+      if (filterForm.style.display === 'none') {
+        filterForm.style.display = 'block';  // Tampilkan form filter
+      } else {
+        filterForm.style.display = 'none';   // Sembunyikan form filter
+      }
+    });
   });
 </script>
 {% endblock extra_js %}
