@@ -1,0 +1,239 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{% endblock %}</title>
+  <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta24/dist/css/tabler.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.2.1/css/dataTables.dataTables.min.css">
+  
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --tblr-font-sans-serif: 'Inter';
+    }
+
+    html {
+      font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    }
+
+    .antialiased {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .dropdown-item:hover {
+      background-color: rgba(108, 122, 145, 0.08);
+    }
+  </style>
+
+</head>
+
+<body class="antialiased">
+  <div class="page">
+    <aside class="navbar navbar-vertical navbar-expand-sm" data-bs-theme="dark">
+      <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar-menu">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <h1 class="navbar-brand">
+          <a href="#">
+            <img src="/static/logo.png" width="110" height="32" alt="Logo" class="navbar-brand-image">
+          </a>
+        </h1>
+        <div class="navbar-nav flex-row d-lg-none">
+          <div class="nav-item dropdown">
+            <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown">
+              <span class="avatar avatar-sm">U</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+              <a href="#" class="dropdown-item">Profil</a>
+              <a href="#" class="dropdown-item">Keluar</a>
+            </div>
+          </div>
+        </div>
+        <div class="collapse navbar-collapse" id="sidebar-menu">
+          <ul class="navbar-nav pt-lg-3">
+            <li class="nav-item {% if request.path == '/dashboard/' %}active{% endif %}">
+              <a class="nav-link" href="{% url 'dashboard' %}">
+                <span class="nav-link-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
+                    stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <polyline points="5 12 3 12 12 3 21 12 19 12" />
+                    <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+                    <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+                  </svg>
+                </span>
+                <span class="nav-link-title">Dashboard</span>
+              </a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                <span class="nav-link-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
+                    stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <polyline points="9 11 12 14 20 6" />
+                    <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+                  </svg>
+                </span>
+                <span class="nav-link-title">Penjualan</span>
+              </a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="#">Transaksi</a>
+                <a class="dropdown-item" href="#">Laporan Penjualan</a>
+              </div>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                <span class="nav-link-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
+                    stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M7 10l5 -6l5 6" />
+                    <path d="M21 10l-2 8a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2l-2 -8z" />
+                    <path d="M12 15m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                  </svg>
+                </span>
+                <span class="nav-link-title">Inventaris</span>
+              </a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="#">Stok Barang</a>
+                <a class="dropdown-item" href="#">Tambah Barang</a>
+                <a class="dropdown-item" href="#">Laporan Stok</a>
+              </div>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                <span class="nav-link-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
+                    stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <rect x="7" y="9" width="14" height="10" rx="2" />
+                    <circle cx="14" cy="14" r="2" />
+                    <path d="M17 9v-2a2 2 0 0 0 -2 -2h-10a2 2 0 0 0 -2 2v6a2 2 0 0 0 2 2h2" />
+                  </svg>
+                </span>
+                <span class="nav-link-title">Keuangan</span>
+              </a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="#">Kas</a>
+                <a class="dropdown-item" href="#">Laporan Keuangan</a>
+              </div>
+            </li>
+            <li class="nav-item dropdown"></li>
+              <a class="nav-link dropdown-toggle {% if request.path|slice:':8' == '/master/' %}show{% endif %}" href="#" data-bs-toggle="dropdown" aria-expanded="{% if request.path|slice:':8' == '/master/' %}true{% endif %}"">
+                <span class="nav-link-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M2.25 7.125C2.25 6.504 2.754 6 3.375 6h6c.621 0 1.125.504 1.125 1.125v3.75c0 .621-.504 1.125-1.125 1.125h-6a1.125 1.125 0 0 1-1.125-1.125v-3.75ZM14.25 8.625c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v8.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 0 1-1.125-1.125v-8.25ZM3.75 16.125c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v2.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 0 1-1.125-1.125v-2.25Z" />
+                  </svg>
+                </span>
+                <span class="nav-link-title">Master</span>
+              </a>
+              <div class="dropdown-menu {% if request.path|slice:':8' == '/master/' %}show{% endif %}"">
+                <a class="dropdown-item {% if request.path == '/master/suppliers/' %}active{% endif %}" href="{% url 'supplier_index' %}">Supplier</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </aside>
+
+    <header class="navbar navbar-expand-sm navbar-light d-print-none">
+      <div class="container-xl">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0 mb-sm-0">
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+              &nbsp;
+            </li>
+            {% endif %}
+          </ul>
+
+          <div class="d-flex">
+            {% if user.is_authenticated %}
+
+            <div class="nav-item dropdown">
+              <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"
+                aria-label="Open user menu">
+                <span class="avatar avatar-sm"
+                  style="background-image: url(https://ui-avatars.com/api/?name={{user.username}})"></span>
+              </a>
+              <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                <a href="#" class="dropdown-item">Status</a>
+                <a href="#" class="dropdown-item">Profile</a>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item">Settings</a>
+                <form action="{% url 'logout' %}" method="post">
+                  {% csrf_token %}
+                  <button type="submit" class="dropdown-item">Logout</button>
+                </form>
+              </div>
+            </div>
+
+            {% else %}
+
+            <a href="#" class="btn me-2">Login</a>
+
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="page-wrapper">
+      <div class="page-header d-print-none">
+        {%  block pageheader %}
+        {%  endblock %}
+      </div>
+      <div class="container-xl mt-4">
+        {% block content %}
+        {% endblock %}
+      </div>
+      <footer class="footer footer-transparent d-print-none">
+        <div class="container-xl">
+          <div class="row text-center align-items-center flex-row">
+            <div class="col-12 col-lg-auto mt-3 mt-lg-0">
+              <ul class="list-inline list-inline-dots mb-0">
+                <li class="list-inline-item">
+                  Copyright © 2025
+                  <a href="." class="link-secondary">Central Fashion</a>.
+                  All rights reserved.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/htmx.org@2.0.4/dist/htmx.js" integrity="sha384-oeUn82QNXPuVkGCkcrInrS1twIxKhkZiFfr2TdiuObZ3n3yIeMiqcRzkIcguaof1" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta24/dist/js/tabler.min.js"></script>
+  <script src="https://cdn.datatables.net/2.2.1/js/dataTables.min.js"></script>
+  <!-- <script type="text/javascript"  src="{% static 'js/global.js' %}"></script> -->
+  <script>
+    // Prevent form resubmission on refresh
+    if (window.history.replaceState) {
+      window.history.replaceState(null, null, window.location.href);
+    }
+  </script>
+  {% block extra_js %}{% endblock %}
+</body>
+
+</html>

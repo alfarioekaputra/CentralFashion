@@ -1,0 +1,69 @@
+{% extends "app.html" %}
+{% load django_tables2 %}
+{% block pageheader %}
+<div class="container-xl">
+  <div class="row g-2 align-items-center">
+    <div class="col">
+      <h2 class="page-title">Supplier</h2>
+    </div>
+  </div>
+</div>
+{% endblock pageheader %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header">
+    <div class="flex-col">
+    <button class="btn btn-icon btn-primary p-2" hx-get="{% url 'supplier_create' %}" hx-target=".modal-body"
+      hx-trigger="click" data-bs-toggle="modal" data-bs-target="#supplierFormModal">
+      <i class="ti ti-plus"></i> TAMBAH SUPPLIER
+    </button>
+    
+    <!-- Tombol Show Filter -->
+    <!-- <button id="show-filter-btn" class="btn btn-secondary" hx-get="{% url 'supplier_load_filter_form' %}"
+      hx-target="#filter-form" hx-swap="innerHTML">
+      <i class="ti ti-search"></i> CARI DATA
+    </button> -->
+    <!-- End Tombol Show Filter -->
+    
+    <a href="{% url 'supplier_export_excel' %}" class="btn btn-warning">
+      <i class="ti ti-file-type-xls"></i> Export Excel
+    </a>
+    </div>
+  </div>
+  <div class="card-body">
+    <div id="table-container">
+      {% include 'filter.html' %}
+      {% include 'table.html' %}
+    </div>
+
+    <!-- start modal form -->
+    <div class="modal fade" id="supplierFormModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+      aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centerad modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Form Tambah Supplier</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+    
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end modal form -->
+  </div>
+</div>
+{% endblock content %}
+
+{% block extra_js %}
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Tangani tampilan form filter saat tombol "Show Filter" diklik
+    // document.getElementById('show-filter-btn').addEventListener('click', function () {
+    //   document.getElementById('filter-form').style.display = 'block';
+    // });
+  });
+</script>
+{% endblock extra_js %}
