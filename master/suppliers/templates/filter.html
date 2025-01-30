@@ -15,7 +15,7 @@
 </style>
 {% load crispy_forms_tags %}
 
-<form method="get" class="mb-4"
+<form id="filter-form" method="get" class="mb-4"
   hx-get="{% url 'supplier_index' %}" 
   hx-target="#table-container" 
   hx-swap="innerHTML"
