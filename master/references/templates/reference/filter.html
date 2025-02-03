@@ -1,0 +1,56 @@
+<style>
+  .htmx-indicator{
+        display:none;
+        opacity:0;
+        transition: opacity 500ms ease-in;
+    }
+    .htmx-request .htmx-indicator{
+        display:inline;
+        opacity:1;
+    }
+    .htmx-request.htmx-indicator{
+        display:inline;
+        opacity:1;
+    }
+</style>
+{% load crispy_forms_tags %}
+
+<form id="filter-form" method="get" class="mb-4"
+  hx-get="{% url 'reference_index' %}" 
+  hx-target="#table-container" 
+  hx-swap="innerHTML"
+  hx-indicator="#spinner">
+  {{ filter.form|crispy }}
+  <button type="submit" id="apply-filter" class="btn btn-primary">
+    <span id="spinner" class="htmx-indicator spinner-border spinner-border-sm me-2" role="status"></span>
+    <!-- <img id="spinner" class="htmx-indicator" src="/static/bars.svg" /> -->
+    Apply Filter
+  </button>
+  <button type="button" id="clear-filter-btn" class="btn btn-secondary" 
+    hx-get="{% url 'reference_index' %}"
+    hx-target="#table-container" 
+    hx-swap="innerHTML">
+    Clear Filter
+  </button>
+</form>
+
+{% block extra_js %}
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // document.getElementById('apply-filter').addEventListener('click', function () {
+    //   document.getElementById('spiner').classList.remove('d-none');
+    // });
+    
+    // Tangani klik tombol "Clear Filter"
+    document.getElementById('clear-filter-btn').addEventListener('click', function () {
+      // Kosongkan semua input di form filter
+      document.querySelectorAll('#filter-form input, #filter-form select').forEach(function (element) {
+        if (element.type !== 'submit') {
+          element.value = '';
+        }
+      });
+      document.querySelector('#filter-form form').submit();
+    });
+  });
+</script>
+{% endblock extra_js %}

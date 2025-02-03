@@ -1,0 +1,15 @@
+{% load crispy_forms_tags %}
+<tr>
+  <td>
+    {{ form.id }}
+    {{ form.name|as_crispy_field }}
+  </td>
+  <td>{{ form.description|as_crispy_field }}</td>
+  <td>{{ form.status|as_crispy_field }}</td>
+  <td>
+    <button type="button" hx-post="{% url 'reference_remove_detail_form' %}" hx-target="closest tr" hx-swap="outerHTML"
+      class="btn btn-danger">
+      HAPUS
+    </button>
+  </td>
+</tr>
