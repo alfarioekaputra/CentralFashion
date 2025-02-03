@@ -143,7 +143,8 @@
                 <span class="nav-link-title">Master</span>
               </a>
               <div class="dropdown-menu {% if request.path|slice:':8' == '/master/' %}show{% endif %}"">
-                <a class="dropdown-item {% if request.path == '/master/suppliers/' %}active{% endif %}" href="{% url 'supplier_index' %}">Supplier</a>
+                <a class="dropdown-item {% if request.path == '/master/references/' %}active{% endif %}" href="{% url 'reference_index' %}">DAFTAR NILAI</a>
+                <a class="dropdown-item {% if request.path == '/master/suppliers/' %}active{% endif %}" href="{% url 'supplier_index' %}">SUPPLIER</a>
               </div>
             </li>
           </ul>

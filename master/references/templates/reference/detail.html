@@ -1,0 +1,87 @@
+{% extends "app.html" %}
+{% load crispy_forms_tags %}
+{% block pageheader %}
+<div class="container-xl">
+  <div class="row g-2 align-items-center">
+    <div class="col">
+      <h2 class="page-title">Reference Detail</h2>
+    </div>
+  </div>
+</div>
+{% endblock pageheader %}
+
+{% block content %}
+<div class="card">
+  <div class="card-body">
+    <div class="form-row">
+      <div class="mb-3">
+        <label class="form-label">NAMA MASTER</label>
+        <input type="text" class="form-control" value="{{ reference.name }}" disabled>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">KETERANGAN</label>
+        <input type="text" class="form-control" value="{{ reference.description }}" disabled>
+      </div>
+    </div>
+    
+    <form method="post">
+      {% csrf_token %}
+      {{ formset.management_form|crispy }}
+      
+      <table class="table table-bordered" id="detail-table">
+        <thead>
+          <tr>
+            <th>NILAI</th>
+            <th>KETERANGAN</th>
+            <th>AKTIF</th>
+            <th>AKSI</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for form in formset %}
+          <tr>
+            <td>
+              {{ form.id }}
+              {{ form.name|as_crispy_field }}
+            </td>
+            <td>{{ form.description|as_crispy_field }}</td>
+            <td>{{ form.status|as_crispy_field }}</td>
+            <td>
+              <button type="button" hx-get="{% url 'reference_remove_detail_form' form.id.value %}" hx-target="closest tr" hx-swap="outerHTML"
+                class="btn btn-danger btn-sm">
+                HAPUS
+              </button>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <!-- <button type="button" hx-get="{% url 'reference_add_detail_form' reference.id %}" hx-target="#detail-table tbody"
+        hx-swap="beforeend" class="btn btn-primary">
+        TAMBAH DATA
+      </button> -->
+      <button type="submit" class="btn btn-success">SIMPAN</button>
+    </form>
+  </div>
+</div>
+{% endblock content %}
+
+{% block extra_js %}
+<script>
+  document.body.addEventListener('htmx:afterSwap', function (evt) {
+    // Hanya jalankan jika respons berasal dari add_detail_form
+    if (evt.detail.requestConfig.path === "{% url 'reference_add_detail_form' reference.id %}") {
+      const totalForms = document.getElementById('id_referencedetail_set-TOTAL_FORMS');
+      let currentForms = parseInt(totalForms.value);
+
+      // Ganti semua __prefix__ dengan index baru
+      const newForm = evt.detail.elt;
+      const regex = new RegExp('__prefix__', 'g');
+      newForm.innerHTML = newForm.innerHTML.replace(regex, currentForms);
+
+      // Update total forms
+      totalForms.value = currentForms + 1;
+    }
+  });
+</script>
+{% endblock extra_js %}

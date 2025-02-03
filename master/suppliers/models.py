@@ -10,18 +10,23 @@ class Termin(TimeStampedModel, SoftDelete):
   description = models.CharField(max_length=100, null=True)
   time_period = models.IntegerField()
 
+  class Meta:
+    db_table = "termins"
+
   def __str__(self):
     return self.name
+  
 class Supplier(TimeStampedModel, SoftDelete):
   code = models.CharField(max_length=10)
   name = models.CharField(max_length=100)
   address = models.TextField(null=True)
   phone = models.CharField(max_length=15, null=True)
   email = models.EmailField(null=True)
-  termin = models.ForeignKey(Termin, on_delete=models.DO_NOTHING)
+  termin = models.ForeignKey(Termin, on_delete=models.CASCADE)
 
   class Meta:
     ordering = ['code']
+    db_table = "suppliers"
 
   def __str__(self):
     return self.name
